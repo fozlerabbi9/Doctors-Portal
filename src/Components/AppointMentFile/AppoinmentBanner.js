@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 const AppoinmentBanner = ({date, setDate}) => {
     return (
         <div className="main-div">
-            <div className="py-24">
+            <div className="lg:py-24">
                 <div class="hero">
                     {/* <div class="hero lg:py-24 mb-5 lg:mb-10"> */}
                     <div class="hero-content flex-col justify-evenly lg:w-3/4 lg:flex-row-reverse">
