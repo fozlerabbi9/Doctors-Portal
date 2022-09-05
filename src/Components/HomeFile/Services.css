@@ -1,0 +1,6 @@
+.mainDiv{
+    margin: 60px auto ;
+}
+.card-custom-style:hover{
+    box-shadow: 3px 3px 20px gray;    
+}
