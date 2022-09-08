@@ -3,8 +3,6 @@
         "_id":1,
         "name":"Teeth Orthodontics",
         "slots":[
-            "08.00 AM - 08.30 AM",
-            "08.30 AM - 09.00 AM",
             "09.00 AM - 09.30 AM",
             "09.30 AM - 10.00 AM",
             "10.00 AM - 10.30 Am",
@@ -15,21 +13,13 @@
         "_id":2,
         "name":"Cosmatic Dentistry",
         "slots":[
-            "08.00 AM - 08.30 AM",
-            "08.30 AM - 09.00 AM",
-            "09.00 AM - 09.30 AM",
-            "09.30 AM - 10.00 AM",
-            "10.00 AM - 10.30 Am",
             "10.30 AM - 11.00 AM"
         ]
     },
     {
         "_id":3,
         "name":"Teeth Cleaning",
-        "slots":[
-            "08.00 AM - 08.30 AM",
-            "08.30 AM - 09.00 AM",
-            "09.00 AM - 09.30 AM",
+        "slots":[            
             "09.30 AM - 10.00 AM",
             "10.00 AM - 10.30 Am",
             "10.30 AM - 11.00 AM"
@@ -39,7 +29,6 @@
         "_id":4,
         "name":"Cavity Protection",
         "slots":[
-            "08.00 AM - 08.30 AM",
             "08.30 AM - 09.00 AM",
             "09.00 AM - 09.30 AM",
             "09.30 AM - 10.00 AM",
@@ -50,11 +39,7 @@
     {
         "_id":5,
         "name":"Pediatric Dental",
-        "slots":[
-            "08.00 AM - 08.30 AM",
-            "08.30 AM - 09.00 AM",
-            "09.00 AM - 09.30 AM",
-            "09.30 AM - 10.00 AM",
+        "slots":[            
             "10.00 AM - 10.30 Am",
             "10.30 AM - 11.00 AM"
         ]
