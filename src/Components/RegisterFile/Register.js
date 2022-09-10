@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from "../../../src/firebase.init";
 import { useForm } from "react-hook-form";
 import Loding from '../SharedFile/Loding';
@@ -9,14 +9,15 @@ const Register = () => {
     const [signInWithGoogle, user, loading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [createUserWithEmailAndPassword, createUser, createLoading, createError,] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
-    if (loading || createLoading) {
+    if (loading || createLoading || updating) {
         return <Loding></Loding>
     }
 
     let errorMessage;
-    if (gError || createError) {
-        errorMessage = <p className='text-red-500 text-sm'>{gError?.message || createError?.message}</p>
+    if (gError || createError || updateError) {
+        errorMessage = <p className='text-red-500 text-sm'>{gError?.message || createError?.message || updateError?.message}</p>
     }
 
     if (createUser || user) {
