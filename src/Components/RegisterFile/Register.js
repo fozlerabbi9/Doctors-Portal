@@ -1,33 +1,25 @@
 import React from 'react';
-import './Login.css';
-// import { useSignInWithGoogle } from 'firebase/auth';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from "../../../src/firebase.init";
 import { useForm } from "react-hook-form";
 import Loding from '../SharedFile/Loding';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-
-const Login = () => {
-    // const { register, handleSubmit } = useForm();
+const Register = () => {
     const [signInWithGoogle, user, loading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const [signInWithEmailAndPassword, signuser, signloading, signerror,] = useSignInWithEmailAndPassword(auth);
+    const [createUserWithEmailAndPassword, createUser, createLoading, createError,] = useCreateUserWithEmailAndPassword(auth);
 
-    const navigate = useNavigate()
-    if (loading || signloading) {
+    if (loading || createLoading) {
         return <Loding></Loding>
     }
-    // if(error || signerror){
 
-    // }
     let errorMessage;
-    if (gError || signerror) {
-        errorMessage = <p className='text-red-500 text-sm'> {gError?.message || signerror?.message}</p>
-        // errorMessage = <p className='text-red-500 text-sm'>{gError?.message || signerror?.message}</p>
+    if (gError || createError) {
+        errorMessage = <p className='text-red-500 text-sm'>{gError?.message || createError?.message}</p>
     }
 
-    if (signuser || user) {
+    if (createUser || user) {
         console.log(user)
         console.log(user?.user?.displayName)
     }
@@ -39,28 +31,37 @@ const Login = () => {
     const onSubmit = data => {
         const email = data.email;
         const password = data.password;
-        signInWithEmailAndPassword(email, password);
-        // console.log(email, password);
+        createUserWithEmailAndPassword(email, password);
     };
-
-    // const onSubmit = data => {
-    //     const password = data.password;
-    //     if (password.length > 6 || password.length < 6) {
-    //         alert("type 6 latter for password")
-    //     }
-    //     else{
-    //         alert("submited");
-    //     }
-    // };
-
 
     return (
         <div className='flex h-96 justify-center items-center '>
             <div className="card w-96 lg:mt-28 bg-base-100 shadow-2xl">
                 <div className="card-body">
-                    <h2 className="items-center text-xl font-bold py-1 rounded-md bg-slate-200">Login</h2>
+                    <h2 className="items-center text-xl font-bold py-1 rounded-md bg-slate-200">Register</h2>
 
                     <form onSubmit={handleSubmit(onSubmit)}>
+
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Enter Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                placeholder="Name"
+                                className="input input-bordered w-full max-w-xs"
+                                {...register("name", {
+                                    required: {
+                                        value: true,
+                                        message: "Name is required"
+                                    }
+                                })}
+                            />
+                            <label className="label">
+                                {errors.name?.type === 'required' && <span className="label-text-alt text-red-500">{errors.name?.message}</span>}
+                            </label>
+                        </div>
+
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
                                 <span className="label-text">Enter Email</span>
@@ -86,6 +87,7 @@ const Login = () => {
 
                             </label>
                         </div>
+
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
                                 <span className="label-text">Enter Password</span>
@@ -111,33 +113,15 @@ const Login = () => {
 
                             </label>
                             {errorMessage}
-                            {/* {
-                                signerror && <p className='text-red-500 mb-2 text-xs'>{signerror?.message}</p>
-                            } */}
                         </div>
 
-                        <input className='btn w-full max-w-xs' type="submit" value="Login" />
-                        {/* navigate() */}
-                        {/* <Link to='register'>register</Link> */}
-                        <p className='text-sm mt-2 font-medium '>New To Doctors Portal...? <Link className='text-primary' to='/register'>Create New Account</Link> </p>
+                        <input className='btn w-full max-w-xs' type="submit" value="Register" />
+                        <p className='text-sm mt-2 font-medium '>Already Have An Account Then  <Link className='text-primary' to='/login'>Go To Login</Link> </p>
                     </form>
 
-
-                    {/* <form onSubmit={handleSubmit(onSubmit)} className="text-left">
-                        <label htmlFor="">Email :</label>
-                        <input className='shadow-xl rounded-md w-full mb-3 py-1 bg-slate-100' {...register("email",)} /> <br />
-                        <label htmlFor="">Password :</label>
-                        <input  name="password" className='shadow-xl rounded-md w-full mb-3 py-1 bg-slate-100' {...register("password")} /> <br />
-                        <input className='text-center w-full bg-green-400 py-2 rounded-md text-xl' type="submit" />
-                    </form> */}
-
                     <div className="divider">OR</div>
-                    {/* {
-                        gError && <p className='text-red-500 text-xs'>{gError.message} log-in cansiled</p>
-                    } */}
                     <button
                         onClick={() => googleLoginFun()}
-                        // onClick={() => signInWithGoogle()}
                         className="btn btn-outline"
                     >Continue With Google</button>
                 </div>
@@ -146,4 +130,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
