@@ -6,6 +6,7 @@ import auth from "../../../src/firebase.init";
 import { useForm } from "react-hook-form";
 import Loding from '../SharedFile/Loding';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 const Login = () => {
@@ -21,9 +22,15 @@ const Login = () => {
     // if (user) {
     //     navigate(from, { replace: true })
     // }
-    if (signuser || guser) {
-        navigate(from, { replace: true })
-    }
+    useEffect(() => {          //===========>> এই ভাবে dite hobe,,
+        if (signuser || guser) {
+            navigate(from, { replace: true })
+        }
+    }, [signuser, guser, from, navigate])
+
+    // if (signuser || guser) {   ===========>> এই ভাবে আর দেয়া যাবে না,,,
+    //     navigate(from, { replace: true })
+    // }
 
     if (loading || signloading) {
         return <Loding></Loding>

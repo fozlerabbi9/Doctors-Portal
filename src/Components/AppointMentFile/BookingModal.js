@@ -40,12 +40,12 @@ const BookingModal = ({ tritment, date, setTritment }) => {
                         {/* <input type="text" placeholder="Type here" className="input w-full mb-3 shadow-md" /> */}
                         <select name='timeSlots' className="select select-bordered mb-3 w-full rounded-lg shadow-md border-solid border-2">
                             {
-                                slots.map(slot => <option value={slot}>{slot}</option>)
+                                slots.map((slot, index) => <option key={index} value={slot}>{slot}</option>)
                             }
                         </select>
-                        <input name='fname' className='mb-3 w-full rounded-lg shadow-md ' value={userName} type="text" /> <br />
+                        <input name='fname' className='mb-3 w-full rounded-lg shadow-md ' readOnly value={userName || ""} type="text" /> <br />
+                        <input name='email' className='mb-3 w-full rounded-lg shadow-md' disabled value={userEmail || ""} type="email" /> <br />
                         <input name='number' className='mb-3 w-full rounded-lg shadow-md' placeholder='Phone Number' type="number" /> <br />
-                        <input name='email' className='mb-3 w-full rounded-lg shadow-md' value={userEmail} type="email" /> <br />
                         <div className="card-actions justify-end">
                             <input className='btn btn-primary w-2/5' type="submit" value="Submit" /> <br />
                         </div>
