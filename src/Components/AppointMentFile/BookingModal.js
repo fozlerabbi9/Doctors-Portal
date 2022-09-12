@@ -1,7 +1,14 @@
 import { format } from 'date-fns';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 
 const BookingModal = ({ tritment, date, setTritment }) => {
+    const user = useAuthState(auth);
+    const userName = user[0]?.displayName;
+    const userEmail = user[0]?.email;
+    console.log(user);
+    console.log(userName);
     const { _id, name, slots } = tritment;
     const fixedDate = format(date, 'PP');
     const serviceName = name;
@@ -36,9 +43,9 @@ const BookingModal = ({ tritment, date, setTritment }) => {
                                 slots.map(slot => <option value={slot}>{slot}</option>)
                             }
                         </select>
-                        <input name='fname' className='mb-3 w-full rounded-lg shadow-md ' placeholder='Full Name' type="text" /> <br />
+                        <input name='fname' className='mb-3 w-full rounded-lg shadow-md ' value={userName} type="text" /> <br />
                         <input name='number' className='mb-3 w-full rounded-lg shadow-md' placeholder='Phone Number' type="number" /> <br />
-                        <input name='email' className='mb-3 w-full rounded-lg shadow-md' placeholder='Valid Email' type="email" /> <br />
+                        <input name='email' className='mb-3 w-full rounded-lg shadow-md' value={userEmail} type="email" /> <br />
                         <div className="card-actions justify-end">
                             <input className='btn btn-primary w-2/5' type="submit" value="Submit" /> <br />
                         </div>

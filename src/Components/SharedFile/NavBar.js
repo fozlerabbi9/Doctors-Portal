@@ -1,14 +1,37 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from "react-router-dom";
+import auth from '../../firebase.init';
 
 const NavBar = () => {
+    const [user] = useAuthState(auth);
+    const logout = () => {
+        signOut(auth);
+      };
+
+    let userNameFirstLatter;
+    if (user) {
+        const userName = user?.displayName;
+        userNameFirstLatter = userName?.slice(0, 1).toUpperCase();
+    }
+    const userPhotoUrl = user?.photoURL;
+    // console.log(userNameFirstLatter);
+    // console.log(user);
+    // console.log(userPhotoUrl);
+
     const Menuitems = <>
         <li> <Link to={'/'}>Home</Link> </li>
         <li><Link to={'About'}>About</Link></li>
         <li><Link to={'Appointment'}>Appointment</Link></li>
         <li><Link to={'Reviews'}>Reviews</Link></li>
-        <li><Link to={'Login'}>Login</Link> </li>
-        {/* <li><Link to={'register'}>register</Link> </li> */}
+        {
+            user ? <li>  <Link className='text-red-400' onClick={logout} to={''}>Log Out</Link> </li> : <li>  <Link to={'Login'}>Login</Link> </li>
+        }
+        {/* <li> {user ? <Link to={'Login'}>Log Out</Link> : <Link to={'Login'}>Login</Link>} </li> */}
+        {
+            user && <li className='bg-gray-500 rounded-full w-12 flex justify-center items-center text-2xl font-bold text-white '>{userNameFirstLatter} </li>
+        }
     </>
     return (
         <div className="navbar bg-base-100 ">

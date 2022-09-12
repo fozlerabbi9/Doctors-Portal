@@ -16,6 +16,7 @@ import ContactUs from './ContactUs';
 import Footer from '../SharedFile/Footer';
 
 const Home = () => {
+
     return (
         <div className=''>
             {/* <div className="hero min-h-screen px-15 bg-[url('https://i.ibb.co/bQvShG5/chair.png')]"> */}

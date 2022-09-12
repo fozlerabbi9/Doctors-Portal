@@ -6,8 +6,8 @@ const Loding = () => {
         //     <button className="btn loading ">loading...</button>
         // </div>
         <div>
-            <div class="flex items-center justify-center ">
-                <div class="w-16 h-16 border-b-2 border-red-700 rounded-full animate-spin"></div>
+            <div className="flex items-center justify-center ">
+                <div className="w-16 h-16 border-b-2 border-red-700 rounded-full animate-spin"></div>
             </div>
         </div>
     );

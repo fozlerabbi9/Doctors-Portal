@@ -3,13 +3,14 @@ import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfil
 import auth from "../../../src/firebase.init";
 import { useForm } from "react-hook-form";
 import Loding from '../SharedFile/Loding';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [signInWithGoogle, user, loading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [createUserWithEmailAndPassword, createUser, createLoading, createError,] = useCreateUserWithEmailAndPassword(auth);
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+    const navigate = useNavigate();
 
     if (loading || createLoading || updating) {
         return <Loding></Loding>
@@ -22,17 +23,20 @@ const Register = () => {
 
     if (createUser || user) {
         console.log(user)
-        console.log(user?.user?.displayName)
+        // console.log(user?.user?.displayName)
     }
 
     const googleLoginFun = () => {
         signInWithGoogle();
     }
 
-    const onSubmit = data => {
+    const onSubmit = async data => {
         const email = data.email;
         const password = data.password;
-        createUserWithEmailAndPassword(email, password);
+        await createUserWithEmailAndPassword(email, password);
+        await updateProfile({ displayName : data.name });
+        // alert("Thanks to register");
+        navigate("/")
     };
 
     return (

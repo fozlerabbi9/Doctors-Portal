@@ -5,6 +5,7 @@ import Appointment from './Components/AppointMentFile/Appointment';
 import Home from './Components/HomeFile/Home';
 import Login from './Components/LoginFile/Login';
 import Register from './Components/RegisterFile/Register';
+import RequireAuth from './Components/RequireAuthFile/RequireAuth';
 // import Register from './Components/RegisterFile/Register';
 import Reviews from './Components/ReviewsFile/Reviews';
 import Footer from './Components/SharedFile/Footer';
@@ -18,8 +19,16 @@ function App() {
 
         <Routes>
           <Route path='/' element={<Home></Home>}></Route>
-          <Route path='About' element={<About></About>}></Route>
-          <Route path='Appointment' element={<Appointment></Appointment>}></Route>
+          <Route path='About' element={
+            <RequireAuth>
+              <About></About>
+            </RequireAuth>
+          }></Route>
+          <Route path='Appointment' element={
+            <RequireAuth>
+              <Appointment></Appointment>
+            </RequireAuth>
+          }></Route>
           <Route path='Reviews' element={<Reviews></Reviews>}></Route>
           <Route path='Login' element={<Login></Login>}></Route>
           <Route path='register' element={<Register></Register>}></Route>

@@ -1,35 +1,37 @@
 import React from 'react';
 import './Login.css';
 // import { useSignInWithGoogle } from 'firebase/auth';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useAuthState, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from "../../../src/firebase.init";
 import { useForm } from "react-hook-form";
 import Loding from '../SharedFile/Loding';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
     // const { register, handleSubmit } = useForm();
-    const [signInWithGoogle, user, loading, gError] = useSignInWithGoogle(auth);
+    const [signInWithGoogle, guser, loading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signInWithEmailAndPassword, signuser, signloading, signerror,] = useSignInWithEmailAndPassword(auth);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
-    const navigate = useNavigate()
+    // const user = useAuthState(auth); এই ভাবে কাজ হবে না ,,,, useAuthState থেকে user আনা যাবে না,,,
+    // if (user) {
+    //     navigate(from, { replace: true })
+    // }
+    if (signuser || guser) {
+        navigate(from, { replace: true })
+    }
+
     if (loading || signloading) {
         return <Loding></Loding>
     }
-    // if(error || signerror){
-
-    // }
     let errorMessage;
     if (gError || signerror) {
         errorMessage = <p className='text-red-500 text-sm'> {gError?.message || signerror?.message}</p>
         // errorMessage = <p className='text-red-500 text-sm'>{gError?.message || signerror?.message}</p>
-    }
-
-    if (signuser || user) {
-        console.log(user)
-        console.log(user?.user?.displayName)
     }
 
     const googleLoginFun = () => {
