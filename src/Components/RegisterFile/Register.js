@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const Register = () => {
     const [signInWithGoogle, user, loading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const [createUserWithEmailAndPassword, createUser, createLoading, createError,] = useCreateUserWithEmailAndPassword(auth);
+    const [createUserWithEmailAndPassword, createUser, createLoading, createError,] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ const Register = () => {
         const email = data.email;
         const password = data.password;
         await createUserWithEmailAndPassword(email, password);
-        await updateProfile({ displayName : data.name });
+        await updateProfile({ displayName: data.name });
         // alert("Thanks to register");
         navigate("/")
     };

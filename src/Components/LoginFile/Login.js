@@ -1,12 +1,14 @@
 import React from 'react';
 import './Login.css';
 // import { useSignInWithGoogle } from 'firebase/auth';
-import { useAuthState, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useAuthState, useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from "../../../src/firebase.init";
 import { useForm } from "react-hook-form";
 import Loding from '../SharedFile/Loding';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useState } from 'react';
+import ForgetPassword from './ForgetPassword';
 
 
 const Login = () => {
@@ -14,6 +16,9 @@ const Login = () => {
     const [signInWithGoogle, guser, loading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signInWithEmailAndPassword, signuser, signloading, signerror,] = useSignInWithEmailAndPassword(auth);
+    const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth);
+    const [forgerEmail, setForgetEmial] = useState('');
+    const [openModal, setOpenmodal] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
@@ -52,16 +57,6 @@ const Login = () => {
         // console.log(email, password);
     };
 
-    // const onSubmit = data => {
-    //     const password = data.password;
-    //     if (password.length > 6 || password.length < 6) {
-    //         alert("type 6 latter for password")
-    //     }
-    //     else{
-    //         alert("submited");
-    //     }
-    // };
-
 
     return (
         <div className='flex h-96 justify-center items-center '>
@@ -71,7 +66,7 @@ const Login = () => {
 
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-control w-full max-w-xs">
-                            <label className="label">
+                            <label className="label pb-0">
                                 <span className="label-text">Enter Email</span>
                             </label>
                             <input
@@ -89,14 +84,14 @@ const Login = () => {
                                     }
                                 })}
                             />
-                            <label className="label">
+                            <label className="label pb-0">
                                 {errors.email?.type === 'required' && <span className="label-text-alt text-red-500">{errors.email?.message}</span>}
                                 {errors.email?.type === 'pattern' && <span className="label-text-alt text-red-500">{errors.email?.message}</span>}
 
                             </label>
                         </div>
                         <div className="form-control w-full max-w-xs">
-                            <label className="label">
+                            <label className="label pb-0">
                                 <span className="label-text">Enter Password</span>
                             </label>
                             <input
@@ -114,7 +109,7 @@ const Login = () => {
                                     }
                                 })}
                             />
-                            <label className="label">
+                            <label className="label pb-0">
                                 {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password?.message}</span>}
                                 {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password?.message}</span>}
 
@@ -131,6 +126,7 @@ const Login = () => {
                         <p className='text-sm mt-2 font-medium '>New To Doctors Portal...? <Link className='text-primary' to='/register'>Create New Account</Link> </p>
                     </form>
 
+                    <p className='text-right text-sm text-green-600 pt-2' onClick={() => setOpenmodal(true)} style={{ marginTop: -5, marginBottom: 10 }} > <label htmlFor="forget-modal">Forget Password</label> </p>
 
                     {/* <form onSubmit={handleSubmit(onSubmit)} className="text-left">
                         <label htmlFor="">Email :</label>
@@ -151,6 +147,11 @@ const Login = () => {
                     >Continue With Google</button>
                 </div>
             </div>
+            {
+                openModal && <ForgetPassword 
+                setOpenmodal={setOpenmodal}
+                ></ForgetPassword>
+            }
         </div>
     );
 };

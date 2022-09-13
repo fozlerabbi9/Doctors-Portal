@@ -10,7 +10,7 @@ const AppoinmentBanner = ({ date, setDate }) => {
         <div style={{
             background: `url(${chairBg})`,
             backgroundSize: "cover",
-            backgroundPosition:"center"
+            backgroundPosition: "center"
         }} className="main-div">
             <div className="lg:py-24">
                 <div className="hero">
@@ -19,11 +19,25 @@ const AppoinmentBanner = ({ date, setDate }) => {
                         <div className="w-full md:w-2/4 lg:w-2/4 mb-0 lg:mb-0 rounded-lg shadow-2xl">
                             <img src={chair} className="" alt='dentist chair' />
                         </div>
-                        <DayPicker className='shadow-xl rounded-lg '
+                        {/* <DayPicker className='shadow-xl rounded-lg '
+                            mode="single"
+                            selected={date}
+                            onClick={(date) => setDate(date)}
+                            dateFormat="MM-dd-yyyy"
+                        ></DayPicker> */}
+
+                        {/* <DayPicker className='shadow-xl rounded-lg '
+                            mode="single"
+                            selected={date}
+                            onSelect={!date ? setDate : date}
+                        ></DayPicker> */}
+
+                        <DayPicker className='shadow-xl rounded-lg'
                             mode="single"
                             selected={date}
                             onSelect={setDate}
                         ></DayPicker>
+
                     </div>
                 </div>
             </div>
