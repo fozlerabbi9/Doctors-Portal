@@ -6,6 +6,8 @@ import { format } from 'date-fns';
 import chairBg from "../../assets/images/bg.png";
 
 const AppoinmentBanner = ({ date, setDate }) => {
+    // console.log(date);
+    // console.log(setDate);
     return (
         <div style={{
             background: `url(${chairBg})`,

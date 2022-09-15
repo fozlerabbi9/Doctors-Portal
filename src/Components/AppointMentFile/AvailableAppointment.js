@@ -11,14 +11,14 @@ const AvailableAppointment = ({ date }) => {
     // console.log(tritment)
     useEffect(() => {
         fetch("http://localhost:5000/service")
-        // fetch("fakedata.json")
+            // fetch("fakedata.json")
             .then(res => res.json())
             .then(data => setService(data))
     }, [])
     // console.log(services)
     return (
         <div className='lg:mt-10'>
-            <h1 className='text-primary'>Avalible Appointment On = {format(date, 'PP')} </h1>
+            <h1 className='text-primary'>Avalible Appointment On =  {date && format(date, 'PP')} </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-5 lg:mx-0 my-5 lg:mb-14">
                 {
@@ -34,7 +34,7 @@ const AvailableAppointment = ({ date }) => {
                 date={date}
                 tritment={tritment}
                 setTritment={setTritment}
-                // key={tritment._id}
+            // key={tritment._id}
             ></BookingModal>}
         </div>
     );

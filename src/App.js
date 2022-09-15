@@ -10,6 +10,10 @@ import RequireAuth from './Components/RequireAuthFile/RequireAuth';
 import Reviews from './Components/ReviewsFile/Reviews';
 import Footer from './Components/SharedFile/Footer';
 import NavBar from './Components/SharedFile/NavBar';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 function App() {
   return (
@@ -36,6 +40,8 @@ function App() {
       </>
 
       {/* <Footer></Footer> */}
+
+      <ToastContainer />
     </div>
   );
 }

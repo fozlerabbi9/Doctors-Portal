@@ -33,7 +33,6 @@ const Service = ({ service, date, setTritment }) => {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };

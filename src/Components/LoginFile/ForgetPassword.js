@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const ForgetPassword = ({ setOpenmodal }) => {
     const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth);
@@ -12,8 +11,8 @@ const ForgetPassword = ({ setOpenmodal }) => {
         const email = e.target.email.value;
         console.log(email);
         sendPasswordResetEmail(email);
-        // toast("please chack your Gmail");
-        alert("please chack your Gmail");
+        toast("please chack your Gmail");
+        // alert("please chack your Gmail");
         setOpenmodal(false);
     }
 
@@ -34,7 +33,6 @@ const ForgetPassword = ({ setOpenmodal }) => {
                                 <label htmlFor="forget-modal" type="submit" className="btn">submit</label>
                             </div> */}
                         </form>
-                        <ToastContainer />
                     </div>
                 </div>
             </div>

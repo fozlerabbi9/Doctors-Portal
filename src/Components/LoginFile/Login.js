@@ -17,11 +17,12 @@ const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signInWithEmailAndPassword, signuser, signloading, signerror,] = useSignInWithEmailAndPassword(auth);
     const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth);
-    const [forgerEmail, setForgetEmial] = useState('');
+    const [forgetEmail, setForgetEmial] = useState('');
     const [openModal, setOpenmodal] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
+    console.log(forgetEmail)
 
     // const user = useAuthState(auth); এই ভাবে কাজ হবে না ,,,, useAuthState থেকে user আনা যাবে না,,,
     // if (user) {
@@ -52,8 +53,10 @@ const Login = () => {
 
     const onSubmit = data => {
         const email = data.email;
+        setForgetEmial(email);
         const password = data.password;
         signInWithEmailAndPassword(email, password);
+        
         // console.log(email, password);
     };
 

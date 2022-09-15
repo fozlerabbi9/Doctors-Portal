@@ -4,6 +4,7 @@ import auth from "../../../src/firebase.init";
 import { useForm } from "react-hook-form";
 import Loding from '../SharedFile/Loding';
 import { Link, useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
 
 const Register = () => {
     const [signInWithGoogle, user, loading, gError] = useSignInWithGoogle(auth);
@@ -36,7 +37,9 @@ const Register = () => {
         await createUserWithEmailAndPassword(email, password);
         await updateProfile({ displayName: data.name });
         // alert("Thanks to register");
-        navigate("/")
+        signOut(auth);
+        // alert("Register Completed You can login now")
+        navigate("/login")
     };
 
     return (
