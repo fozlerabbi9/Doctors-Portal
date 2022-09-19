@@ -12,6 +12,7 @@ import Footer from './Components/SharedFile/Footer';
 import NavBar from './Components/SharedFile/NavBar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Dashboard from './Components/DashboardFile/Dashboard';
 
 
 
@@ -36,6 +37,11 @@ function App() {
           <Route path='Reviews' element={<Reviews></Reviews>}></Route>
           <Route path='Login' element={<Login></Login>}></Route>
           <Route path='register' element={<Register></Register>}></Route>
+          <Route path='Dashboard' element={
+            <RequireAuth>
+              <Dashboard></Dashboard>
+            </RequireAuth>
+          }></Route>
         </Routes>
       </>
 

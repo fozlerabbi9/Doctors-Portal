@@ -26,6 +26,9 @@ const NavBar = () => {
         <li><Link to={'Appointment'}>Appointment</Link></li>
         <li><Link to={'Reviews'}>Reviews</Link></li>
         {
+            user && <li><Link to={'Dashboard'}>Dashboard</Link></li>
+        }
+        {
             user ? <li>  <Link className='text-red-400' onClick={logout} to={''}>Log Out</Link> </li> : <li>  <Link to={'Login'}>Login</Link> </li>
         }
         {/* <li> {user ? <Link to={'Login'}>Log Out</Link> : <Link to={'Login'}>Login</Link>} </li> */}

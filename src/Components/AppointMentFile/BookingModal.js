@@ -4,7 +4,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 
-const BookingModal = ({ tritment, date, setTritment }) => {
+const BookingModal = ({ tritment, date, setTritment, refetch }) => {
+    console.log(date);
     const user = useAuthState(auth);
     const userName = user[0]?.displayName;
     const userEmail = user[0]?.email;
@@ -13,7 +14,12 @@ const BookingModal = ({ tritment, date, setTritment }) => {
     const { _id, name, slots } = tritment;
     const fixedDate = date && format(date, 'PP');
     const serviceName = name;
+
     // console.log(date)
+    if (!date) {
+        toast("please select the date first");
+        return
+    }
 
     const handleBooking = (event) => {
         event.preventDefault();
@@ -47,9 +53,14 @@ const BookingModal = ({ tritment, date, setTritment }) => {
                     toast(`Your Appoinment is Booked SuccessFully${fixedDate} at ${slotTime}`)
                 }
                 else {
-                    toast.error(`Already Have an appoinment on ${data.bookingInfo?.fixedDate} at ${data.bookingInfo?.slotTime}`)
+                    toast.error(<p className='text-xs'>Already Have an appoinment on <br /> ${data.bookingInfo?.fixedDate} at ${data.bookingInfo?.slotTime}</p>)
                 }
+                refetch()
             })
+        // if (!date) {
+        //     toast("please select the date first");
+        //     return
+        // }
         setTritment(null);
 
         // console.log(bookingInfo);
@@ -66,16 +77,18 @@ const BookingModal = ({ tritment, date, setTritment }) => {
                     <h3 className="font-bold text-lg mb-4">Booking For : <span className='text-primary'>{name}</span></h3>
 
                     <form onSubmit={handleBooking}>
-                        <input className='mb-3 w-full rounded-lg shadow-md' readOnly value={`${format(date, 'PP')}`} type="text" /> <br />
+                        {/* <input className='mb-3 w-full rounded-lg shadow-md' readOnly value={fixedDate} type="text" /> <br /> */}
+                        <input required className='mb-3 w-full rounded-lg shadow-md' readOnly value={`${format(date, 'PP')}`} type="text" /> <br />
+                        {/* <input className='mb-3 w-full rounded-lg shadow-md' readOnly value={`${date ? format(date, 'PP') : toast("please") }`} type="text" /> <br /> */}
                         {/* <input type="text" placeholder="Type here" className="input w-full mb-3 shadow-md" /> */}
                         <select name='timeSlots' className="select select-bordered mb-3 w-full rounded-lg shadow-md border-solid border-2">
                             {
                                 slots.map((slot, index) => <option key={index} value={slot}>{slot}</option>)
                             }
                         </select>
-                        <input name='fname' className='mb-3 w-full rounded-lg shadow-md' placeholder='Full Name' type="text" /> <br />
-                        <input name='email' className='mb-3 w-full rounded-lg shadow-md' disabled value={userEmail || ""} type="email" /> <br />
-                        <input name='number' className='mb-3 w-full rounded-lg shadow-md' placeholder='Phone Number' type="number" /> <br />
+                        <input required name='fname' className='mb-3 w-full rounded-lg shadow-md' placeholder='Full Name' type="text" /> <br />
+                        <input required name='email' className='mb-3 w-full rounded-lg shadow-md' disabled value={userEmail || ""} type="email" /> <br />
+                        <input required name='number' className='mb-3 w-full rounded-lg shadow-md' placeholder='Phone Number' type="number" /> <br />
                         <div className="card-actions justify-end">
                             <input className='btn btn-primary w-2/5' type="submit" value="Submit" /> <br />
                         </div>
