@@ -5,12 +5,14 @@ import { useForm } from "react-hook-form";
 import Loding from '../SharedFile/Loding';
 import { Link, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
+import useToken from '../HookFile/useToken';
 
 const Register = () => {
-    const [signInWithGoogle, user, loading, gError] = useSignInWithGoogle(auth);
+    const [signInWithGoogle, gUser, loading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [createUserWithEmailAndPassword, createUser, createLoading, createError,] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+    const [token] = useToken(createUser || gUser)
     const navigate = useNavigate();
 
     if (loading || createLoading || updating) {
@@ -22,9 +24,10 @@ const Register = () => {
         errorMessage = <p className='text-red-500 text-sm'>{gError?.message || createError?.message || updateError?.message}</p>
     }
 
-    if (createUser || user) {
-        console.log(user)
+    if (token) {
+        // console.log(gUser)
         // console.log(user?.user?.displayName)
+        navigate("/login")
     }
 
     const googleLoginFun = () => {
@@ -39,7 +42,7 @@ const Register = () => {
         // alert("Thanks to register");
         signOut(auth);
         // alert("Register Completed You can login now")
-        navigate("/login")
+        // navigate("/login")
     };
 
     return (

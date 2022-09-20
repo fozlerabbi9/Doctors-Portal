@@ -13,6 +13,8 @@ import NavBar from './Components/SharedFile/NavBar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from './Components/DashboardFile/Dashboard';
+import MyyAppoinment from './Components/DashboardFile/MyyAppoinment';
+import MyReviews from './Components/DashboardFile/MyReviews';
 
 
 
@@ -37,11 +39,17 @@ function App() {
           <Route path='Reviews' element={<Reviews></Reviews>}></Route>
           <Route path='Login' element={<Login></Login>}></Route>
           <Route path='register' element={<Register></Register>}></Route>
+
           <Route path='Dashboard' element={
             <RequireAuth>
               <Dashboard></Dashboard>
             </RequireAuth>
-          }></Route>
+          }>
+            <Route index element={<MyyAppoinment></MyyAppoinment>}></Route>
+            <Route path="MyAppointment" element={<MyyAppoinment></MyyAppoinment>}></Route>
+            <Route path='myReviews' element={<MyReviews></MyReviews>}></Route>
+          </Route>
+
         </Routes>
       </>
 

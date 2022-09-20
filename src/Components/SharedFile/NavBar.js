@@ -1,24 +1,33 @@
 import { signOut } from 'firebase/auth';
 import React from 'react';
+import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import auth from '../../firebase.init';
 
 const NavBar = () => {
+    // const [pageValue, setpageValue] = useState(true);
     const [user] = useAuthState(auth);
     const logout = () => {
         signOut(auth);
-      };
+    };
 
     let userNameFirstLatter;
     if (user) {
         const userName = user?.displayName;
         userNameFirstLatter = userName?.slice(0, 1).toUpperCase();
     }
-    const userPhotoUrl = user?.photoURL;
-    // console.log(userNameFirstLatter);
-    // console.log(user);
-    // console.log(userPhotoUrl);
+    // const userPhotoUrl = user?.photoURL;
+    // const pathName = useLocation().pathname;
+    // const pathName = location.state?.from?.pathname;
+
+    // console.log(pageValue)
+    // const pathnameValue = pathName.toString()
+    // console.log(pathnameValue)
+    // if (pathnameValue === "Dashboard") {
+    //     // setpageValue(true)
+    // }
+
 
     const Menuitems = <>
         <li> <Link to={'/'}>Home</Link> </li>
@@ -55,6 +64,16 @@ const NavBar = () => {
                     {Menuitems}
                 </ul>
 
+            </div>
+            <div className="navbar-end lg:hidden">
+                {/* <label style={pageValue ? { display: "inline-block" } : { display: "hidden" }} tabIndex="1" htmlFor="dashbord-sidbar" className="btn btn-ghost lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                    </label>
+                 */}
+                <label  tabIndex="1" htmlFor="dashbord-sidbar" className="btn btn-ghost lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                </label>
+                {/* <label htmlFor="dashbord-sidbar" className="btn btn-primary drawer-button lg:hidden">Open drawer</label> */}
             </div>
         </div>
     );
