@@ -9,6 +9,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import ForgetPassword from './ForgetPassword';
+import useToken from '../HookFile/useToken';
 
 
 const Login = () => {
@@ -17,11 +18,13 @@ const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [signInWithEmailAndPassword, signuser, signloading, signerror,] = useSignInWithEmailAndPassword(auth);
     const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth);
+    const [token] = useToken(signuser || guser)
     const [forgetEmail, setForgetEmial] = useState('');
     const [openModal, setOpenmodal] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
+    
     // console.log(forgetEmail)
 
     // const user = useAuthState(auth); এই ভাবে কাজ হবে না ,,,, useAuthState থেকে user আনা যাবে না,,,
@@ -29,10 +32,11 @@ const Login = () => {
     //     navigate(from, { replace: true })
     // }
     useEffect(() => {          //===========>> এই ভাবে dite hobe,,
-        if (signuser || guser) {
+        if (token) {
             navigate(from, { replace: true })
         }
-    }, [signuser, guser, from, navigate])
+    }, [token, from, navigate])
+    // }, [signuser, guser, from, navigate])
 
     // if (signuser || guser) {   ===========>> এই ভাবে আর দেয়া যাবে না,,,
     //     navigate(from, { replace: true })

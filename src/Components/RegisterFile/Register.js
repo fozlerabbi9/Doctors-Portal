@@ -12,8 +12,8 @@ const Register = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [createUserWithEmailAndPassword, createUser, createLoading, createError,] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
-    const [token] = useToken(createUser || gUser)
     const navigate = useNavigate();
+    const [token] = useToken(createUser || gUser)
 
     if (loading || createLoading || updating) {
         return <Loding></Loding>
