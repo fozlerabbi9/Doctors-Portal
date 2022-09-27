@@ -6,6 +6,7 @@ import Loding from '../SharedFile/Loding';
 import { Link, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import useToken from '../HookFile/useToken';
+import { toast } from 'react-toastify';
 
 const Register = () => {
     const [signInWithGoogle, gUser, loading, gError] = useSignInWithGoogle(auth);
@@ -14,6 +15,11 @@ const Register = () => {
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const navigate = useNavigate();
     const [token] = useToken(createUser || gUser)
+    console.log(createUser)
+
+    if (token) {
+        toast("Now You Can Login Here")
+    }
 
     if (loading || createLoading || updating) {
         return <Loding></Loding>

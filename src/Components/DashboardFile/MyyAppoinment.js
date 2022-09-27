@@ -1,18 +1,40 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 
 const MyyAppoinment = () => {
     const [myAppointment, setMyAppointment] = useState([]);
     const [user] = useAuthState(auth);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/booking?email=${user.email}`)
-                .then(res => res.json())
-                .then(data => setMyAppointment(data))
+            console.log(user)
+            fetch(`http://localhost:5000/booking?email=${user.email}`, {
+                method : 'GET',
+                headers : {
+                    'authorization' : `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
+                .then(res => {
+                    // console.log(res)
+                    if(res.status === 401 || res.status === 403){
+                        navigate('/');
+                        signOut(auth);
+                        localStorage.removeItem("accessToken");
+                        toast("user Un-Authorized")
+                        // toast(`${res.status.massage}`)
+                    }
+                    return res.json()
+                })
+                .then(data => {
+                    setMyAppointment(data)
+                })
         }
     }, [user])
 
@@ -35,7 +57,7 @@ const MyyAppoinment = () => {
                     <tbody>
 
                         {
-                            myAppointment.map((appointment, index) => <tr key={index}>
+                            myAppointment?.map((appointment, index) => <tr key={index}>
 
                                 <th className=' text-xs md:text-md lg:text-base ' >{index + 1}</th>
                                 <td className=' text-xs md:text-md lg:text-base ' >{appointment.serviceName}</td>

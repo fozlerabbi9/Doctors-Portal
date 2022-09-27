@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import ForgetPassword from './ForgetPassword';
 import useToken from '../HookFile/useToken';
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
@@ -25,7 +26,8 @@ const Login = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
     
-    // console.log(forgetEmail)
+    console.log(signuser)
+    console.log(token)
 
     // const user = useAuthState(auth); এই ভাবে কাজ হবে না ,,,, useAuthState থেকে user আনা যাবে না,,,
     // if (user) {
@@ -33,6 +35,7 @@ const Login = () => {
     // }
     useEffect(() => {          //===========>> এই ভাবে dite hobe,,
         if (token) {
+            // toast("Now You Can Login Here")
             navigate(from, { replace: true })
         }
     }, [token, from, navigate])
@@ -57,6 +60,7 @@ const Login = () => {
 
     const onSubmit = data => {
         const email = data.email;
+        console.log(email)
         setForgetEmial(email);
         const password = data.password;
         signInWithEmailAndPassword(email, password);
